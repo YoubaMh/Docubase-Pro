@@ -18,4 +18,8 @@
         <item>3</item>
     </string-array>
 
+    <string name="error_message_email">Veuillez introduire un email valide !</string>
+    <string name="error_message_password">Veuillez introduire un mot de passe valide !</string>
+    <string name="error_valid_email_password">Vos identifiants sont invalides !</string>
+
 </resources>

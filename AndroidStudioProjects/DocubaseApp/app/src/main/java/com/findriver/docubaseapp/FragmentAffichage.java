@@ -73,11 +73,6 @@ public class FragmentAffichage extends Fragment {
                         String publisher = displays.getJSONObject(i).getString("publisher_id");
                         String publisherRole = getPublisherRole(publisher);
                         list.add(new AffichageListe(title, publisherRole, description));
-                        Log.d("title", "affichage"+ i);
-                        Log.d("title", title);
-                        Log.d("title", description);
-                        list.add(new AffichageListe(title+"", "Etudiant", description+""));
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

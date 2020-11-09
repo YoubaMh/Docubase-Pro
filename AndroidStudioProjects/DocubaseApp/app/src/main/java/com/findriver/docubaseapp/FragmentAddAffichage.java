@@ -113,7 +113,7 @@ public class FragmentAddAffichage extends Fragment {
                 String title = et_titre.getText().toString().trim();
                 String description = et_description.getText().toString().trim();
 
-                if (title == null || description == null) {
+                if (title.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getContext(), "Remplissez tout les champs !", Toast.LENGTH_LONG).show();
                 } else {
                     addNewDisplay(title, description);
@@ -123,9 +123,9 @@ public class FragmentAddAffichage extends Fragment {
     }
 
     private void addNewDisplay(final String title, final String description) {
-        String url = "http://51.210.107.146:5000/api/documents";
+        String url = "http://51.210.107.146:5000/api/displays";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(), "Ajout avec succéss", Toast.LENGTH_LONG).show();

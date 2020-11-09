@@ -91,7 +91,7 @@ public class FragmentHome extends Fragment {
         };
 
         Handler h = new Handler();
-        h.postDelayed(r, 5000);
+        h.postDelayed(r, 100);
         if (lastDisplayPublisher !=  null){
             Log.d("affichage", lastDisplayPublisher);
         }
@@ -155,18 +155,43 @@ public class FragmentHome extends Fragment {
                     lastDisplayTitle = lastDisplayJson.getString("title");
                     lastDisplayDescription = lastDisplayJson.getString("description");
                     lastDisplayPublisher = lastDisplayJson.getString("publisher_id");
-                    Log.d("affichage", lastDisplayPublisher);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 titreAffichage.setText(lastDisplayTitle);
                 contentAffichage.setText(lastDisplayDescription);
+                setPublisher(lastDisplayPublisher);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 titreAffichage.setText("Aucun affichage");
                 contentAffichage.setText("Erreur");
+                nomProf.setText("aucun prof");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void setPublisher(String id) {
+        String url = "http://51.210.107.146:5000/api/users/"+id;
+        String prof;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONObject json = jsonResponse.getJSONObject("user");
+                    nomProf.setText(json.getString("firstname") + " " + json.getString("lastname"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
                 nomProf.setText("aucun prof");
             }
         });

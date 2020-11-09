@@ -9,6 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.findriver.docubaseapp.Hooks.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +29,7 @@ public class FragmentDocument extends Fragment {
     private RecyclerView recyclerView;
     private List<DocumentListe> list = new ArrayList<>();
 
+    private RequestQueue queue;
 
     public FragmentDocument() {
         // Required empty public constructor
@@ -43,6 +56,9 @@ public class FragmentDocument extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.document_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        initView(view);
+        initObject();
+
         DocumentListe doc1 = new DocumentListe("M2 GL");
         DocumentListe doc2 = new DocumentListe("M1 TW");
 
@@ -52,5 +68,14 @@ public class FragmentDocument extends Fragment {
         recyclerView.setAdapter(new DocumentAdapter(list));
 
         return view;
+    }
+
+    /* Initialisation des views */
+    private void initView(View view) {
+
+    }
+    /* Initialisation des Objects */
+    private void initObject() {
+        queue = VolleySingleton.getInstance(getContext()).getRequestQueue();
     }
 }

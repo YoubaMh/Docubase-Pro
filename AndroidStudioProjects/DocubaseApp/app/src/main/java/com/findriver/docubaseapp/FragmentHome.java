@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +38,9 @@ public class FragmentHome extends Fragment {
 
     private TextView welcomeWithName, cardNumberDocuments, titreAffichage, nomProf, contentAffichage;
     private RequestQueue queue;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String lastDisplayTitle = null;
+    private String lastDisplayDescription = null;
+    private String lastDisplayPublisher = null;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -62,19 +58,12 @@ public class FragmentHome extends Fragment {
     public static FragmentHome newInstance(String param1, String param2) {
         FragmentHome fragment = new FragmentHome();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -90,9 +79,23 @@ public class FragmentHome extends Fragment {
         String firstname = intent.getStringExtra("firstname");
         welcomeWithName.setText("Bienvenue "+firstname);
 
-        setNumberDocuments();
-        setLastDisplay();
 
+
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run(){
+                setNumberDocuments();
+                setLastDisplay();
+            }
+        };
+
+        Handler h = new Handler();
+        h.postDelayed(r, 5000);
+        if (lastDisplayPublisher !=  null){
+            Log.d("affichage", lastDisplayPublisher);
+        }
+        
         return view;
     }
 
@@ -134,24 +137,25 @@ public class FragmentHome extends Fragment {
         });
 
         queue.add(stringRequest);
+
+
+
     }
 
     private void setLastDisplay() {
         String url = "http://51.210.107.146:5000/api/displays";
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String lastDisplayTitle = null;
-                String lastDisplayDescription = null;
-                String lastDisplayPublisher = null;
+
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONArray jsonResponseArray = jsonResponse.getJSONArray("displays");
                     JSONObject lastDisplayJson = jsonResponseArray.getJSONObject(0);
                     lastDisplayTitle = lastDisplayJson.getString("title");
                     lastDisplayDescription = lastDisplayJson.getString("description");
-                    lastDisplayPublisher = lastDisplayJson.getString("publisher");
+                    lastDisplayPublisher = lastDisplayJson.getString("publisher_id");
+                    Log.d("affichage", lastDisplayPublisher);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

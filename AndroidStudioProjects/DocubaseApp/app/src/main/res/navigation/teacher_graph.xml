@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/teacher_graph"
+    app:startDestination="@id/nav_add_document">
+
+    <fragment
+        android:id="@+id/nav_add_document"
+        android:name="com.findriver.docubaseapp.FragmentAddDocument"
+        android:label="fragment_add_document"
+        tools:layout="@layout/fragment_add_document" />
+    <fragment
+        android:id="@+id/nav_add_affichage"
+        android:name="com.findriver.docubaseapp.FragmentDisconnect"
+        android:label="fragment_disconnect"
+        tools:layout="@layout/fragment_disconnect" />
+    <fragment
+        android:id="@+id/nav_disconnect"
+        android:name="com.findriver.docubaseapp.FragmentAddAffichage"
+        android:label="fragment_add_affichage"
+        tools:layout="@layout/fragment_add_affichage" />
+</navigation>

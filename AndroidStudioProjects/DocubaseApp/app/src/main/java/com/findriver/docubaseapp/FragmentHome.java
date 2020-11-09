@@ -95,7 +95,7 @@ public class FragmentHome extends Fragment {
         if (lastDisplayPublisher !=  null){
             Log.d("affichage", lastDisplayPublisher);
         }
-        
+
         return view;
     }
 

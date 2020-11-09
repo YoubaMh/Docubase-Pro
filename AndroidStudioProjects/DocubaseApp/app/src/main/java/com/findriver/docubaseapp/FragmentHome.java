@@ -33,7 +33,7 @@ import org.w3c.dom.Text;
  */
 public class FragmentHome extends Fragment {
 
-    private TextView welcomeWithName, cardNumberDocuments;
+    private TextView welcomeWithName, cardNumberDocuments, titreAffichage, nomProf, contentAffichage;
     private RequestQueue queue;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -98,6 +98,9 @@ public class FragmentHome extends Fragment {
     private void initView(View view) {
         welcomeWithName = (TextView) view.findViewById(R.id.WelcomeWithName);
         cardNumberDocuments = (TextView) view.findViewById(R.id.card_number_documents);
+        titreAffichage = (TextView) view.findViewById(R.id.titre_affichage);
+        nomProf = (TextView) view.findViewById(R.id.nom_prof);
+        contentAffichage = (TextView) view.findViewById(R.id.content_affichage);
     }
     /* Initialisation des Objects */
     private void initObject() {
@@ -105,7 +108,7 @@ public class FragmentHome extends Fragment {
     }
 
     private void setNumberDocuments() {
-        String url = "http://192.168.1.121:5000/api/documents";
+        String url = "http://51.210.107.146:5000/api/documents";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -126,6 +129,31 @@ public class FragmentHome extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 cardNumberDocuments.setText("Error");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void setLastDisplay() {
+        String url = "http://51.210.107.146:5000/api/documents";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int count = 0;
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    System.err.println(jsonResponse.get("documents"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                cardNumberDocuments.setText(String.valueOf(count));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
 

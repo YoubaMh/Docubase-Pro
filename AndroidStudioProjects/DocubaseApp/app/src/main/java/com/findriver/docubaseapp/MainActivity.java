@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(final String email, final String password) {
-        String url = "http://192.168.1.121:5000/api/users/login";
+        String url = "http://51.210.107.146:5000/api/users/login";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

@@ -68,19 +68,11 @@ public class FragmentAffichage extends Fragment {
             public void run(){
                 for(int i=0; i < displays.length(); i++) {
                     try {
-                        System.err.println(displays.getJSONObject(i));
                         String title = displays.getJSONObject(i).getString("title");
                         String description = displays.getJSONObject(i).getString("description");
-<<<<<<< HEAD
                         String publisher = displays.getJSONObject(i).getString("publisher_id");
                         String publisherRole = getPublisherRole(publisher);
                         list.add(new AffichageListe(title, publisherRole, description));
-=======
-                        Log.d("title", "affichage"+ i);
-                        Log.d("title", title);
-                        Log.d("title", description);
-                        list.add(new AffichageListe(title+"", "Etudiant", description+""));
->>>>>>> 6f3fb33c1635381337e2213e75d40a0a6e8098a4
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -92,11 +84,6 @@ public class FragmentAffichage extends Fragment {
 
         Handler h = new Handler();
         h.postDelayed(r, 500);
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 6f3fb33c1635381337e2213e75d40a0a6e8098a4
 
         return view;
     }

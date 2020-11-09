@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_document"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="26dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            app:srcCompat="@drawable/ic_google_docs"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="12dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="M1-GL-1er cour AIE"/>
+
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#ffffff"
+            app:srcCompat="@drawable/ic_download"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

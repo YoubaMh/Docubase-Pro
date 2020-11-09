@@ -1,5 +1,6 @@
 package com.findriver.docubaseapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -62,7 +63,5 @@ public class FragmentDisconnect extends Fragment {
         return inflater.inflate(R.layout.fragment_disconnect, container, false);
     }
 
-    public void disconnect(){
-        getActivity().getFragmentManager().popBackStack();
-    }
+
 }

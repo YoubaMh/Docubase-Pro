@@ -63,6 +63,12 @@ public class BaseActivity extends AppCompatActivity implements PopupMenu.OnMenuI
        popupMenu.show();
    }
 
+    public void disconnect(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         sharedPreferences = getApplicationContext().getSharedPreferences("Session", Context.MODE_PRIVATE);

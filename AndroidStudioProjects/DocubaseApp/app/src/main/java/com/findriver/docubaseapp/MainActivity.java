@@ -3,7 +3,9 @@ package com.findriver.docubaseapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue queue;
     private InputValidation inputValidation;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        sharedPreferences = getSharedPreferences("Session", Context.MODE_PRIVATE);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         loginButton = (Button) findViewById(R.id.login);
@@ -103,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
                     String lastname = userJson.getString("lastname");
                     String email = userJson.getString("email");
                     String role = userJson.getString("role");
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("id", id);
+                    editor.putString("nom", lastname);
+                    editor.putString("prenom", firstname);
+                    editor.putString("email", email);
+                    editor.putString("role", role);
+                    editor.putBoolean("isOnline", true);
+                    editor.commit();
+
 
                     Intent intent = new Intent(MainActivity.this, BaseActivity.class);
                     intent.putExtra("id", id);

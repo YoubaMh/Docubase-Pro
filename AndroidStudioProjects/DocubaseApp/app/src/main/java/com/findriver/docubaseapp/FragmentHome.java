@@ -22,6 +22,7 @@ import com.findriver.docubaseapp.Hooks.VolleySingleton;
 import com.findriver.docubaseapp.Utils.InputValidation;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -33,7 +34,7 @@ import org.w3c.dom.Text;
  */
 public class FragmentHome extends Fragment {
 
-    private TextView welcomeWithName, cardNumberDocuments;
+    private TextView welcomeWithName, cardNumberDocuments, titreAffichage, nomProf, contentAffichage;
     private RequestQueue queue;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +91,7 @@ public class FragmentHome extends Fragment {
         welcomeWithName.setText("Bienvenue "+firstname);
 
         setNumberDocuments();
+        setLastDisplay();
 
         return view;
     }
@@ -98,6 +100,9 @@ public class FragmentHome extends Fragment {
     private void initView(View view) {
         welcomeWithName = (TextView) view.findViewById(R.id.WelcomeWithName);
         cardNumberDocuments = (TextView) view.findViewById(R.id.card_number_documents);
+        titreAffichage = (TextView) view.findViewById(R.id.titre_affichage);
+        nomProf = (TextView) view.findViewById(R.id.nom_prof);
+        contentAffichage = (TextView) view.findViewById(R.id.content_affichage);
     }
     /* Initialisation des Objects */
     private void initObject() {
@@ -113,8 +118,7 @@ public class FragmentHome extends Fragment {
                 int count = 0;
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    String documents = jsonResponse.getString("documents");
-                    for(int i = 0; i <= jsonResponse.length(); i++) {
+                    for(int i = 0; i < jsonResponse.getJSONArray("documents").length(); i++) {
                         count++;
                     }
                 } catch (JSONException e) {
@@ -126,6 +130,40 @@ public class FragmentHome extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 cardNumberDocuments.setText("Error");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void setLastDisplay() {
+        String url = "http://51.210.107.146:5000/api/displays";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String lastDisplayTitle = null;
+                String lastDisplayDescription = null;
+                String lastDisplayPublisher = null;
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonResponseArray = jsonResponse.getJSONArray("displays");
+                    JSONObject lastDisplayJson = jsonResponseArray.getJSONObject(0);
+                    lastDisplayTitle = lastDisplayJson.getString("title");
+                    lastDisplayDescription = lastDisplayJson.getString("description");
+                    lastDisplayPublisher = lastDisplayJson.getString("publisher");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                titreAffichage.setText(lastDisplayTitle);
+                contentAffichage.setText(lastDisplayDescription);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                titreAffichage.setText("Aucun affichage");
+                contentAffichage.setText("Erreur");
+                nomProf.setText("aucun prof");
             }
         });
 

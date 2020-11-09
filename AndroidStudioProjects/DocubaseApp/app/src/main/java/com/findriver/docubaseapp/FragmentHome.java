@@ -22,6 +22,7 @@ import com.findriver.docubaseapp.Hooks.VolleySingleton;
 import com.findriver.docubaseapp.Utils.InputValidation;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -90,6 +91,7 @@ public class FragmentHome extends Fragment {
         welcomeWithName.setText("Bienvenue "+firstname);
 
         setNumberDocuments();
+        setLastDisplay();
 
         return view;
     }
@@ -116,8 +118,7 @@ public class FragmentHome extends Fragment {
                 int count = 0;
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    String documents = jsonResponse.getString("documents");
-                    for(int i = 0; i <= jsonResponse.length(); i++) {
+                    for(int i = 0; i < jsonResponse.getJSONArray("documents").length(); i++) {
                         count++;
                     }
                 } catch (JSONException e) {
@@ -136,24 +137,33 @@ public class FragmentHome extends Fragment {
     }
 
     private void setLastDisplay() {
-        String url = "http://51.210.107.146:5000/api/documents";
+        String url = "http://51.210.107.146:5000/api/displays";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int count = 0;
+                String lastDisplayTitle = null;
+                String lastDisplayDescription = null;
+                String lastDisplayPublisher = null;
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    System.err.println(jsonResponse.get("documents"));
+                    JSONArray jsonResponseArray = jsonResponse.getJSONArray("displays");
+                    JSONObject lastDisplayJson = jsonResponseArray.getJSONObject(0);
+                    lastDisplayTitle = lastDisplayJson.getString("title");
+                    lastDisplayDescription = lastDisplayJson.getString("description");
+                    lastDisplayPublisher = lastDisplayJson.getString("publisher");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                cardNumberDocuments.setText(String.valueOf(count));
+                titreAffichage.setText(lastDisplayTitle);
+                contentAffichage.setText(lastDisplayDescription);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                titreAffichage.setText("Aucun affichage");
+                contentAffichage.setText("Erreur");
+                nomProf.setText("aucun prof");
             }
         });
 

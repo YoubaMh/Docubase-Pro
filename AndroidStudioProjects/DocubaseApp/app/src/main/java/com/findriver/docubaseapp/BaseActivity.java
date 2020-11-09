@@ -72,7 +72,7 @@ public class BaseActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     Intent i = new Intent(BaseActivity.this, AdminActivity.class);
                     startActivity(i);
                 }else{
-                    Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Vous n'êtes pas un admin", Toast.LENGTH_LONG).show();
                 }
                 return true;
 
@@ -81,7 +81,7 @@ public class BaseActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     Intent i = new Intent(BaseActivity.this, TeacherActivity.class);
                     startActivity(i);
                 }else{
-                    Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Vous n'êtes pas un enseignant", Toast.LENGTH_LONG).show();
                 }
                 return true;
             default:

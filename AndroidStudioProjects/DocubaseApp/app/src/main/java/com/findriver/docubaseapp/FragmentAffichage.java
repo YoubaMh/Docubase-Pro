@@ -34,6 +34,8 @@ public class FragmentAffichage extends Fragment {
     private RequestQueue queue;
     private JSONArray displays;
 
+    private String role = null;
+
     public FragmentAffichage() {
         // Required empty public constructor
     }
@@ -69,34 +71,27 @@ public class FragmentAffichage extends Fragment {
                         System.err.println(displays.getJSONObject(i));
                         String title = displays.getJSONObject(i).getString("title");
                         String description = displays.getJSONObject(i).getString("description");
-                        AffichageListe affichage = new AffichageListe(title, "Etudiant", description);
-                        list.add(affichage);
-                        affichage = null;
+                        String publisher = displays.getJSONObject(i).getString("publisher_id");
+                        String publisherRole = getPublisherRole(publisher);
+                        list.add(new AffichageListe(title, publisherRole, description));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                recyclerView.setAdapter(new AffichageAdapter(list));
             }
         };
 
         Handler h = new Handler();
-        h.postDelayed(r, 1000);
+        h.postDelayed(r, 500);
 
-
-//        AffichageListe affichage1 = new AffichageListe("Superman dalilou" ,"Etudiant", "Appel a tout les etudiants MASTER 1 GL, le dernier délai de l’exercice AIE est pour le 30 AOUT 2020, vous devez envoyer le document PDF à l’email de l’université.");
-//        AffichageListe affichage2 = new AffichageListe("Jimbo nitrat" ,"Administrateur", "Appel a tout les etudiants MASTER 1 GL, le dernier délai de l’exercice AIE est pour le 30 AOUT 2020, vous devez envoyer le document PDF à l’email de l’université.");
-//
-//        list.add(affichage1);
-//        list.add(affichage2);
-
-        recyclerView.setAdapter(new AffichageAdapter(list));
 
         return view;
     }
 
     /* Initialisation des views */
     private void initView(View view) {
-//        welcomeWithName = (TextView) view.findViewById(R.id.WelcomeWithName);
+
     }
     /* Initialisation des Objects */
     private void initObject() {
@@ -127,7 +122,28 @@ public class FragmentAffichage extends Fragment {
         queue.add(stringRequest);
     }
 
-    private void setDisplays(JSONArray displays) {
-        this.displays = displays;
+    private String getPublisherRole(String id) {
+        String url = "http://51.210.107.146:5000/api/users/"+id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONObject json = jsonResponse.getJSONObject("user");
+                    role = json.getString("firstname") + " " + json.getString("lastname");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                role = "error";
+            }
+        });
+
+        queue.add(stringRequest);
+        return role;
     }
 }

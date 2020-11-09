@@ -12,19 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_account"
-        android:name="com.findriver.docubaseapp.FragmentUsers"
-        android:label="fragment_users"
-        tools:layout="@layout/fragment_users" />
-
-    <fragment
         android:id="@+id/nav_disconnect"
         android:name="com.findriver.docubaseapp.FragmentDisconnect"
         android:label="fragment_disconnect"
         tools:layout="@layout/fragment_disconnect" />
+
+
+    <fragment
+        android:id="@+id/nav_displays"
+        android:name="com.findriver.docubaseapp.FragmentAffichage"
+        android:label="fragment_affichage"
+        tools:layout="@layout/fragment_affichage" />
+
     <fragment
         android:id="@+id/nav_documents"
-        android:name="com.findriver.docubaseapp.FragmentAddUser"
-        android:label="fragment_add_user"
-        tools:layout="@layout/fragment_add_user" />
+        android:name="com.findriver.docubaseapp.FragmentDocument"
+        android:label="fragment_document"
+        tools:layout="@layout/fragment_document" />
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.findriver.docubaseapp.FragmentProfil"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profil" />
 </navigation>

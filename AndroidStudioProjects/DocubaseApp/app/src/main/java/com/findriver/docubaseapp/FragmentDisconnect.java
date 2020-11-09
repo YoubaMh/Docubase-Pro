@@ -61,4 +61,8 @@ public class FragmentDisconnect extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_disconnect, container, false);
     }
+
+    public void disconnect(){
+        getActivity().getFragmentManager().popBackStack();
+    }
 }

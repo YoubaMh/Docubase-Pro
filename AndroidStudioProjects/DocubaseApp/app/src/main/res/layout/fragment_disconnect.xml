@@ -52,6 +52,7 @@
             android:elevation="0dp"
             android:text="Oui, je souhaite le deconnecté"
             android:textAllCaps="false"
+            android:onClick="disconnect"
             android:textColor="@color/design_default_color_background"
             android:textStyle="bold"
             android:textSize="20dp"

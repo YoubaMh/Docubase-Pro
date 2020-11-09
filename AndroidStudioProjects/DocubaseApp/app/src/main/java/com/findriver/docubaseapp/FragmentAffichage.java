@@ -68,7 +68,6 @@ public class FragmentAffichage extends Fragment {
             public void run(){
                 for(int i=0; i < displays.length(); i++) {
                     try {
-                        System.err.println(displays.getJSONObject(i));
                         String title = displays.getJSONObject(i).getString("title");
                         String description = displays.getJSONObject(i).getString("description");
                         String publisher = displays.getJSONObject(i).getString("publisher_id");
@@ -78,6 +77,7 @@ public class FragmentAffichage extends Fragment {
                         Log.d("title", title);
                         Log.d("title", description);
                         list.add(new AffichageListe(title+"", "Etudiant", description+""));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -89,7 +89,6 @@ public class FragmentAffichage extends Fragment {
 
         Handler h = new Handler();
         h.postDelayed(r, 500);
-
 
         return view;
     }

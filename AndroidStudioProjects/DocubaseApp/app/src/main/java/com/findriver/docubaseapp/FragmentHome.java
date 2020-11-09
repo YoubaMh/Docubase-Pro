@@ -105,7 +105,7 @@ public class FragmentHome extends Fragment {
     }
 
     private void setNumberDocuments() {
-        String url = "http://192.168.1.121:5000/api/documents";
+        String url = "http://51.210.107.146:5000/api/documents";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

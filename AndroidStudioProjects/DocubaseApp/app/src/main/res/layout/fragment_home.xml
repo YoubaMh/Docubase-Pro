@@ -85,7 +85,159 @@
                 android:layout_marginTop="30dp"
                 >
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de documents"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="30dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/roboto_medium"/>
 
+                <LinearLayout
+                    android:id="@+id/card_documents"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/rounded_card_documents_home"
+                    android:padding="25dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_google_docs"
+                            android:scaleType="fitStart"
+                            android:tint="#ffffff"
+                            android:layout_marginLeft="-3dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Documents"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:fontFamily="@font/roboto_medium"/>
+
+                        <TextView
+                            android:id="@+id/card_number_documents"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="30"
+                            android:textColor="#ffffff"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:fontFamily="@font/roboto_black"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dernier affichage"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="30dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/roboto_medium" />
+
+                <LinearLayout
+                    android:id="@+id/card_dernier_affichage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/rounded_editext"
+                    android:paddingTop="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/ic_user_profile"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/titre_affichage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Exercice AIE"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textSize="18dp"
+                                android:textColor="@color/colorPrimaryDark"/>
+
+                            <TextView
+                                android:id="@+id/nom_prof"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Farah Prénom"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="#B7B7B7"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/content_affichage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="8"
+                        android:text="Appel a tout les etudiants MASTER 1 GL, le dernier délai de l’exercice AIE est pour le 30 AOUT 2020, vous devez envoyer le document PDF à l’email de l’université."
+                        android:textColor="#797979"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="14dp"
+                        android:layout_marginTop="15dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_comments"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0 Commentaires"
+                            android:textColor="#59629D"/>
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 

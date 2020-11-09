@@ -6,18 +6,22 @@ import androidx.core.widget.NestedScrollView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.findriver.docubaseapp.Hooks.VolleySingleton;
 import com.findriver.docubaseapp.Utils.InputValidation;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    private RequestQueue requestQueue;
+
+    private String email;
+
+    private String password;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         layEmail = (TextInputLayout) findViewById(R.id.emailError);
         layPassword = (TextInputLayout) findViewById(R.id.passwordError);
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
     }
 
     private void initObject() {
@@ -71,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = inputEmail.getText().toString().trim();
-                final String password = inputPassword.getText().toString().trim();
+                 email = inputEmail.getText().toString().trim();
+                 password = inputPassword.getText().toString().trim();
 
                 checkLogin(email, password);
             }
@@ -89,65 +101,88 @@ public class MainActivity extends AppCompatActivity {
         if (!inputValidation.isInputEditTextFilled(inputPassword, layPassword, getString(R.string.error_message_password))) {
             return;
         }
-        login(email, password);
+        thread t= new thread();
+        t.execute(new String[]{inputEmail.getText().toString(), inputPassword.getText().toString()});
     }
 
-    private void login(final String email, final String password) {
-        String url = "http://51.210.107.146:5000/api/users/login";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Map<String, String> errors = new HashMap<>();
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    String user = jsonResponse.getString("user");
-                    JSONObject userJson = new JSONObject(user);
-                    String id = userJson.getString("id");
-                    String firstname = userJson.getString("firstname");
-                    String lastname = userJson.getString("lastname");
-                    String email = userJson.getString("email");
-                    String role = userJson.getString("role");
-
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("id", id);
-                    editor.putString("nom", lastname);
-                    editor.putString("prenom", firstname);
-                    editor.putString("email", email);
-                    editor.putString("role", role);
-                    editor.putBoolean("isOnline", true);
-                    editor.commit();
 
 
-                    Intent intent = new Intent(MainActivity.this, BaseActivity.class);
-                    intent.putExtra("id", id);
-                    intent.putExtra("email", email);
-                    intent.putExtra("firstname", firstname);
-                    startActivity(intent);
+    private class thread extends AsyncTask<String,Integer,Void> {
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            if (values[0]==100){
+                Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+
+            }
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            String url = "http://51.210.107.146:5000/api/users/login";
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Map<String, String> errors = new HashMap<>();
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        String user = jsonResponse.getString("user");
+                        JSONObject userJson = new JSONObject(user);
+                        String id = userJson.getString("id");
+                        String firstname = userJson.getString("firstname");
+                        String lastname = userJson.getString("lastname");
+                        String email = userJson.getString("email");
+                        String role = userJson.getString("role");
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("id", id);
+                        editor.putString("nom", lastname);
+                        editor.putString("prenom", firstname);
+                        editor.putString("email", email);
+                        editor.putString("role", role);
+                        editor.putBoolean("isOnline", true);
+                        editor.commit();
+
+
+                        Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                        intent.putExtra("id", id);
+                        intent.putExtra("email", email);
+                        intent.putExtra("firstname", firstname);
+                        startActivity(intent);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("connec", String.valueOf(error));
-                Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
-            }
-        }) {
-            String data = "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}";
-            public String getBodyContentType() { return "application/json; charset=utf-8"; }
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return data.getBytes("utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return null;
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("connec", String.valueOf(error));
+                    Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
                 }
-            }
-        };
+            }) {
+                String data = "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}";
+                public String getBodyContentType() { return "application/json; charset=utf-8"; }
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return data.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            };stringRequest.setRetryPolicy(new DefaultRetryPolicy
+                    (1000,100,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(stringRequest);
 
-        queue.add(stringRequest);
+            return null;
+        }
     }
 }

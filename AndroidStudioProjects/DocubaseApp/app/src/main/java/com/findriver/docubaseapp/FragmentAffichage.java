@@ -69,13 +69,16 @@ public class FragmentAffichage extends Fragment {
                         System.err.println(displays.getJSONObject(i));
                         String title = displays.getJSONObject(i).getString("title");
                         String description = displays.getJSONObject(i).getString("description");
-                        AffichageListe affichage = new AffichageListe(title, "Etudiant", description);
-                        list.add(affichage);
-                        affichage = null;
+                        Log.d("title", "affichage"+ i);
+                        Log.d("title", title);
+                        Log.d("title", description);
+                        list.add(new AffichageListe(title+"", "Etudiant", description+""));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
+                recyclerView.setAdapter(new AffichageAdapter(list));
             }
         };
 
@@ -89,7 +92,7 @@ public class FragmentAffichage extends Fragment {
 //        list.add(affichage1);
 //        list.add(affichage2);
 
-        recyclerView.setAdapter(new AffichageAdapter(list));
+
 
         return view;
     }

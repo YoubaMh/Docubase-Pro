@@ -14,45 +14,6 @@
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/nav_host_fragment_container">
-
-        <ImageButton
-            android:id="@+id/bt_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingTop="20dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="20dp"
-            app:srcCompat="@drawable/ic_back"
-            android:background="#00000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="15dp"
-            android:paddingTop="20dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="20dp"
-            app:srcCompat="@drawable/ic_search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
@@ -104,11 +65,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-=======
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
->>>>>>> 5dd12fd64f75c3dfb098703cb418049a40082697
         app:navGraph="@navigation/teacher_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
